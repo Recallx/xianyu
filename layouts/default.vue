@@ -1,8 +1,23 @@
 <template>
   <div>
+    <Header></Header>
+    <!-- nuxt相当于router-view -->
     <nuxt />
+
+    <foother></foother>
   </div>
 </template>
+<script>
+import Header from '../components/header'
+import foother from '../components/foother'
+export default {
+  // 注册引入的文件
+  components:{
+    Header,
+    foother
+  }
+}
+</script>
 
 <style>
 html {
@@ -16,5 +31,26 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+*{
+  margin: 0;
+  padding: 0;
+}
 
+/* 初始化css样式 */
+ul,li,ol{
+  list-style: none;
+}
+
+i,em{
+  font-style: normal;
+
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover{
+  color:inherit;
+}
 </style>
