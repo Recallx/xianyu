@@ -25,7 +25,7 @@
         <el-input v-model="registerList.chekpassword" placeholder="确认密码"></el-input>
       </el-form-item>
       <!-- 登录按钮 -->
-      <el-button class="submit" type="primary">登录</el-button>
+      <el-button class="submit" type="primary">注册</el-button>
     </el-form>
   </div>
 </template>
