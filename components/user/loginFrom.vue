@@ -54,9 +54,10 @@ export default {
             data: this.loginList
           })
           .then(res =>{
-            console.log(res)
+            // console.log(res)
             // 在成功的时候将token存到vueX里面
             this.$store.commit("user/setUserInfo",res.data)
+            this.$message.success('登录成功，正在跳转...')
             this.$router.push('/')
           })
         }else{
