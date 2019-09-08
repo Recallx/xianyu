@@ -64,7 +64,8 @@ export default {
     this.$axios({
       url: "/airs/sale"
     }).then(res => {
-      console.log(res);
+      // console.log(res);
+
       // 将拿到的数据放到数组里面
       this.sale = res.data.data
     });

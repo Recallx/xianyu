@@ -15,7 +15,7 @@
     <el-form class="search-form-content" ref="form" label-width="80px;">
       <el-form-item label="出发城市">
         <el-autocomplete
-          v-model="form.departureCity"
+          v-model="form.departCity"
           :fetch-suggestions="querySearchAsync"
           placeholder="请输入出发城市"
           @select="handleSelect"
@@ -41,8 +41,8 @@
         ></el-date-picker>
       </el-form-item>
       <!-- 搜索按钮 -->
-      <el-form-item>
-        <el-button @click="handlsearch" type="primary" class="boutton" icon="el-icon-search">搜索</el-button>
+      <el-form-item label>
+        <el-button style="width:100%;" type="primary" icon="el-icon-search" @click="handleSubmit">搜索</el-button>
       </el-form-item>
       <!-- 换样式 -->
       <div class="reverse">
@@ -61,7 +61,7 @@ export default {
       // form提交城市数据
       form: {
         // 出发城市
-        departureCity: "",
+        departCity: "",
         departCode: "",
         destCity: "",
         destCode: "",
@@ -77,11 +77,11 @@ export default {
   methods: {
     // 交换城市
     handljiao() {
-      const { departureCity, departCode, destCity, destCode } = this.form;
+      const { departCity, departCode, destCity, destCode } = this.form;
       // 拿到城市和代码，交叉赋值
-      this.form.departureCity = destCity;
+      this.form.departCity = destCity;
       this.form.departCode = destCode;
-      this.form.destCity = departureCity;
+      this.form.destCity = departCity;
       this.form.destCode = departCode;
     },
     // tab栏切换
@@ -108,6 +108,8 @@ export default {
         }
       }).then(res => {
         console.log(res);
+        console.log('-------------');
+
         // 将data解构出来
         const { data } = res.data;
         // 因为参数带有市，我们要把市去掉
@@ -119,7 +121,7 @@ export default {
           newData.push(e);
         });
         // 默认选中第一个城市
-        this.form.departureCity = newData[0].value;
+        this.form.departCity = newData[0].value;
         this.form.departCode = newData[0].value;
 
         cb(newData);
@@ -129,7 +131,7 @@ export default {
     handleSelect(item) {
       // console.log(item)
       // 将拿到的城市名和城市代码付给我们定义的表单
-      this.form.departureCity = item.value;
+      this.form.departCity = item.value;
       this.form.departCode = item.sort;
     },
     // 到达城市获取搜索建议，并显示在框内
@@ -177,10 +179,10 @@ export default {
       this.form.deparDate = moment(value).format(`YYYY-MM-DD`);
     },
     // 搜索按钮
-    handlsearch() {
+    handleSubmit() {
       // console.log(this.form);
       // 判断不能为空
-      if (!this.form.departureCity) {
+      if (!this.form.departCity) {
         this.$alert("出发城市不能为空", "提示");
         return;
       }
@@ -305,5 +307,5 @@ export default {
       top: 20px;
     }
   }
-} 
+}
 </style>

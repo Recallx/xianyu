@@ -1,9 +1,11 @@
 
 // 存数据
-export const state = {
-    userInfo: {
-        token: '',
-        user: {}
+export const state =()=> {
+    return{
+        userInfo: {
+            token: '',
+            user: {}
+        }
     }
 }
 // 写方法
