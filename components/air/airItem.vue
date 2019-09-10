@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="5" class="price">￥{{item.org_settle_price}}</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini" @click="handlClick">选定</el-button>
+              <el-button type="warning" size="mini" @click="handlClick(item.seat_xid)">选定</el-button>
               <p>剩余:83</p>
             </el-col>
           </el-row>
@@ -104,9 +104,13 @@ export default {
   },
   methods: {
     // 选定按钮方法
-    handlClick(){
+    handlClick(seat_xid){
       this.$router.push({
-        name:'air/order'
+        path:'order',
+        query: {
+          id:this.data.id,
+          seat_xid
+        }
       })
     },
     hanldClick() {
