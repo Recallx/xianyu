@@ -9,8 +9,6 @@
         <div>
           <flistHead />
         </div>
-        <!-- 侧边栏 -->
-        <filsRight/>
         <!-- 航班信息 -->
         <div>
           <filstItem v-for="(item,index) in dataList" :key="index" :data="item" />
@@ -31,6 +29,8 @@
       <!-- 侧边栏 -->
       <div class="aside">
         <!-- 侧边栏组件 -->
+        <!-- 侧边栏 -->
+        <filsRight />
       </div>
     </el-row>
   </section>
@@ -40,7 +40,7 @@
 import flistHead from "../../components/air/airHead";
 import filstItem from "../../components/air/airItem";
 import fightsFilters from "../../components/air/flightsFilters";
-import filsRight from '../../components/air/airRgith'
+import filsRight from "../../components/air/airRgith";
 export default {
   data() {
     return {
@@ -52,12 +52,12 @@ export default {
       // 总数据
       flightsData: {
         // 为了传数据到子组件可以缓存
-        flights:{},
+        flights: {},
         info: {},
         options: {}
       },
       cacheFlightsData: {
-        flights:{},
+        flights: {},
         info: {},
         options: {}
       }
@@ -69,21 +69,32 @@ export default {
     fightsFilters,
     filsRight
   },
+  // 添加侦听器侦听路由变化
+  watch: {
+    $route(){
+      this.init()
+    }
+      
+  },
   mounted() {
-    this.$axios({
-      url: "/airs",
-      params: this.$route.query
-    }).then(res => {
-      console.log(res);
-      this.flightsData = res.data;
-      this.cacheFlightsData = {...res.data}
-      // 总条数设置给total
-      this.total = this.flightsData.flights.length;
-      // 第一页的值,切割5条数据出来
-      this.dataList = this.flightsData.flights.slice(0, this.pageSize);
-    });
+    this.init()
   },
   methods: {
+    // 封装获取数据
+    init() {
+      this.$axios({
+        url: "/airs",
+        params: this.$route.query
+      }).then(res => {
+        console.log(res);
+        this.flightsData = res.data;
+        this.cacheFlightsData = { ...res.data };
+        // 总条数设置给total
+        this.total = this.flightsData.flights.length;
+        // 第一页的值,切割5条数据出来
+        this.dataList = this.flightsData.flights.slice(0, this.pageSize);
+      });
+    },
     // 传值到子组件
     setDataList(arr) {
       this.flightsData.flights = arr;
@@ -122,7 +133,6 @@ export default {
   width: 1000px;
   margin: 20px auto;
 }
-
 .flights-content {
   width: 745px;
   font-size: 14px;

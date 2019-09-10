@@ -19,11 +19,12 @@
     </div>
     <div class="history">
       <h5>历史查询</h5>
-      <nuxt-link to="#">
-        <el-row type="flex" justify="space-between" class="history-item" align="middle">
+      <nuxt-link :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
+      v-for="(item,index) in airsolg" :key="index">
+        <el-row type="flex" justify="space-between" class="history-item" align="middle" >
           <div class="air-info">
-            <div>广州-上海</div>
-            <p>2019-09-10</p>
+            <div class="to-from">{{item.departCity}}-{{item.destCity}}</div>
+            <p>{{item.deparDate}}</p>
           </div>
           <span>选择</span>
         </el-row>
@@ -33,7 +34,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data () {
+    return {
+      // 定义一个变量
+      airsolg:[]
+    }
+  },
+  mounted(){
+    // 拿到本地存储的表单数据
+    const arr = JSON.parse(localStorage.getItem('airs')) || [];
+    // 将拿到的数组存到定义的数组
+    this.airsolg = arr
+  }
+};
 </script>
 
 <style scoped lang="less">
@@ -53,6 +67,7 @@ export default {};
     }
   }
   .service-tel {
+    font-size: 14px;
     background-color: #f6f6f6;
     text-align: center;
     height: 32px;
@@ -68,6 +83,30 @@ export default {};
       font-weight: normal;
       padding-bottom: 10px;
     border-bottom: 1px #ccc solid;
+  }
+  .history-item{
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px #eee solid;
+    &:last-child{
+      border: none;
+    }
+    .to-from{
+      margin-bottom: 5px;
+    }
+    p{
+      font-size: 12px;
+      color: #666;
+    }
+    span{
+      color: #fff;
+      display: block;
+      padding: 2px 10px;
+      background: orange;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
   }
 }
 </style>

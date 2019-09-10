@@ -194,6 +194,14 @@ export default {
         this.$alert("出发日期不能为空", "提示");
         return;
       }
+      // 将表单数据存到本地存储
+      // 先从本地拿下来，如果没有就给个空数组
+      const arr = JSON.parse(localStorage.getItem('airs')) || []
+      // 将表达数据存到数组里面
+      arr.push(this.form)
+      // 在将数组存到本地存储
+      localStorage.setItem('airs',JSON.stringify(arr))
+
       // 跳转到机票页
       this.$router.push({
         path: "/air/flights",
